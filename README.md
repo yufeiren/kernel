@@ -26,4 +26,14 @@ make -j [# of parallel jobs]
 
 printk
 
+make modules_install
+
+
+my kernel test version
+----------------------
+
+centos 6.5
+
+http://mirror.rackspace.com/CentOS/6.5/isos/x86_64/
+
 
