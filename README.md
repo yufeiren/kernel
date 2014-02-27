@@ -36,4 +36,14 @@ centos 6.5
 
 http://mirror.rackspace.com/CentOS/6.5/isos/x86_64/
 
+http://irtfweb.ifa.hawaii.edu/~denault/notes/linux-compiling_kernels.html
+
+# make clean
+# make mrproper
+# make oldconfig    -> generate a .config file based on the running kernel
+# make bzImage
+# make modules
+# make modules_install
+# make install     
+
 
