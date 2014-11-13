@@ -100,11 +100,48 @@ http://mirror.rackspace.com/CentOS/6.5/isos/x86_64/
 
 http://irtfweb.ifa.hawaii.edu/~denault/notes/linux-compiling_kernels.html
 
-# make clean
-# make mrproper
-# make oldconfig    -> generate a .config file based on the running kernel
-# make bzImage
-# make modules
-# make modules_install
-# make install     
+my make script
+--------------
 
+$ make clean && make mrproper
+$ make menuconfig
+$ make -j32 bzImage && make -j32 modules
+# make -j32 modules_install && make -j32 install
+
+KVM setup on CentOS (Network)
+-----------------------------
+
+http://www.cyberciti.biz/faq/kvm-virtualization-in-redhat-centos-scientific-linux-6/
+
+
+create vm in srv365-15
+----------------------
+
+// start hyperviser
+service libvirtd restart
+
+wget http://lug.mtu.edu/centos/6.5/isos/x86_64/CentOS-6.5-x86_64-minimal.iso
+
+
+
+yum install kvm python-virtinst libvirt libvirt-python virt-manager \
+virt-viewer libguestfs-tools
+yum -y install policycoreutils-python
+
+semanage fcontext --add -t virt_image_t '/data/vm(/.*)?'
+semanage fcontext -l | grep virt_image_t
+restorecon -R -v /data/vm
+
+virt-install \
+--name vm0 \
+--ram=1024 \
+--vcpus=16 \
+--disk path=/data/vm/centos65.img,size=10 \
+--graphics none \
+--cdrom=/data/vm/CentOS-6.5-x86_64-minimal.iso \
+--os-type=linux
+
+
+--extra-args="console=tty0 console=ttyS0,115200"
+
+--network network=my_libvirt_virtual_net \
